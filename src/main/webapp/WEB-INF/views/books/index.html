@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все книги</title>
+</head>
+<body>
+
+<div>
+    <form th:method="get" th:action="@{/books}">
+        <label for="page">Номер страницы: </label>
+        <input type="text" id="page" th:name="page"/>
+        <label for="books_per_page">Колличество книг на странице: </label>
+        <input type="text" id="books_per_page" th:name="books_per_page"/>
+        <label for="sort_by_year">Сортировать по году:</label>
+        <select th:type="text" id="sort_by_year" name="sort_by_year">
+            <option disabled selected value>-----</option>
+            <option th:value="true" th:text="Да"></option>
+            <option th:value="false" th:text="Нет"></option>
+        </select>
+        <br/>
+        <input type="submit" value="Применить фильтр"/>
+    </form>
+</div>
+<hr/>
+<br/>
+
+<div th:each="book : ${books}">
+    <a th:href="@{/books/{id}(id=${book.getBook_id()})}"
+       th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">user</a>
+</div>
+
+<br/>
+<hr/>
+
+<div>
+    <form th:method="get" th:action="@{/books/search}">
+        <label for="search">Введите поисковой запрос: </label>
+        <input type="text" id="search" th:name="search"/>
+        <br/>
+        <input type="submit" value="Искать!"/>
+    </form>
+</div>
+<hr/>
+
+<br/>
+<a href="/books/new">Добавить новую книгу</a>
+
+</body>
+</html>
